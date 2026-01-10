@@ -50,8 +50,22 @@ class Settings(BaseSettings):
     API_TOKEN: Optional[str] = None
     
     class Config:
-        # Look for .env in project root (parent of backend directory)
-        env_file = str(Path(__file__).parent.parent.parent / ".env")
+        # Look for .env in multiple locations
+        # Railway/Docker: current directory or /app
+        # Local dev: project root (parent of backend)
+        import os
+        env_paths = [
+            Path(__file__).parent.parent.parent / ".env",  # Project root
+            Path(__file__).parent.parent / ".env",  # Backend directory
+            Path(".env"),  # Current directory
+        ]
+        for p in env_paths:
+            if p.exists():
+                env_file = str(p)
+                break
+        else:
+            env_file = None  # No .env file found - rely on OS environment
+        
         env_file_encoding = "utf-8"
         case_sensitive = True
         extra = "ignore"  # Ignore extra fields from .env that aren't in the model
