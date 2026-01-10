@@ -1,283 +1,224 @@
-# Smart Approval AI
+# Smart Approval AI 🚀
 
-AI-Based Document Analysis, Performance Indicators & Reporting System for UGC & AICTE Reviewers
+### **Built with Google Technologies** | Powered by **Gemini AI**
 
-## Overview
+<p align="center">
+  <img src="https://img.shields.io/badge/Google_Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Firebase-Auth_&_Backend-FFCA28?style=for-the-badge&logo=firebase&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Google_Cloud-Platform-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Google_AI_Studio-Integrated-34A853?style=for-the-badge&logo=google&logoColor=white"/>
+</p>
 
-Smart Approval AI is a reviewer-facing AI tool that automatically analyzes institutional documents submitted for UGC/AICTE approvals and produces:
+---
 
-- Performance scores on official KPI metrics
-- Document sufficiency percentage
-- Risk/compliance flags
-- Evidence-backed structured data
-- Past-performance trends
-- Official downloadable PDF report
+## 🎯 Overview
 
-## Architecture
+Smart Approval AI is an **AI-powered document analysis platform** that leverages **Google's cutting-edge AI technologies** to automate institutional accreditation review for AICTE and NBA regulatory bodies.
 
-### Backend (FastAPI)
-- **Framework**: FastAPI
-- **Database**: MongoDB
-- **AI**: OpenAI GPT-5 Nano (GPT-5 Mini fallback)
-- **Document Processing**: Unstructured-IO
-- **Report Generation**: WeasyPrint (HTML → PDF)
+### Why Google Technologies?
 
-### Frontend (Next.js)
-- **Framework**: Next.js 14
-- **Styling**: Tailwind CSS
-- **Charts**: Recharts
-- **File Upload**: React Dropzone
+| Technology | Usage | Benefit |
+|------------|-------|---------|
+| **Google Gemini 2.5 Flash** | Document Analysis & Extraction | Fastest, most accurate AI model |
+| **Firebase Authentication** | User Management | Enterprise-grade security |
+| **Google Sign-In (OAuth 2.0)** | Login | Seamless one-click auth |
+| **Firebase Admin SDK** | Role Management | Custom claims for RBAC |
+| **Google Cloud Vision** | OCR (Optional) | Industry-leading text recognition |
+| **Google AI Studio** | Prompt Engineering | AI model optimization |
 
-## Project Structure
+---
 
-```
-.
-├── backend/
-│   ├── routers/          # API endpoints
-│   ├── services/         # Business logic
-│   ├── models/           # Data models
-│   ├── schemas/          # Pydantic schemas
-│   ├── pipelines/        # Processing pipeline
-│   ├── ai/               # AI client
-│   ├── config/           # Configuration
-│   └── utils/            # Utilities
-├── frontend/
-│   ├── pages/            # Next.js pages
-│   ├── components/       # React components
-│   ├── services/         # API services
-│   └── styles/           # CSS styles
-└── docker-compose.yml    # Docker setup
+## 🔥 Google Technology Stack
+
+### 🧠 AI & Machine Learning
+
+#### Google Gemini AI (Primary AI Engine)
+```python
+# Backend Configuration
+GEMINI_MODEL = "gemini-2.5-flash"  # Latest multimodal AI
+GEMINI_API_KEY = "your-key"
 ```
 
-## Features
+- **Semantic Block Classification** - AI understands document context
+- **Structured Data Extraction** - Extracts 10+ information blocks
+- **Intelligent KPI Calculation** - Automated performance scoring
+- **Compliance Analysis** - AI-powered rule checking
 
-### Core Modules
+#### Google AI Studio Integration
+- Fine-tuned prompts for document analysis
+- Multimodal processing (text + tables + images)
+- Temperature-controlled outputs for consistency
 
-1. **Dual Reviewer Mode** - UGC / AICTE mode selection
-2. **Document Upload** - Drag & drop, multiple formats
-3. **Document Preprocessing** - OCR, segmentation via Unstructured-IO
-4. **AI Classification** - Document type detection
-5. **AI Extraction** - Structured data extraction
-6. **Document Quality** - Duplicate, outdated, quality checks
-7. **Sufficiency Scoring** - Document completeness calculation
-8. **KPI Scoring** - Mode-specific performance indicators
-9. **Trend Analysis** - Historical performance tracking
-10. **Compliance Engine** - Rule-based compliance checks
-11. **Evidence System** - Source tracking for all extractions
-12. **PDF Report Generation** - Official government-style reports
-13. **Chatbot Assistant** - GPT-powered reviewer assistant
+### 🔐 Firebase Services
 
-## Setup
+#### Firebase Authentication
+```typescript
+// Frontend - Google Sign-In
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+```
+
+- **Google Sign-In** - Primary authentication method
+- **Email/Password** - Secondary auth option
+- **Custom Claims** - Role-based access (College/Department)
+
+#### Firebase Admin SDK
+```python
+# Backend - Token Verification
+from firebase_admin import credentials, auth
+auth.verify_id_token(id_token)
+```
+
+- Server-side token verification
+- User role management
+- Secure API authorization
+
+---
+
+## 📊 Architecture
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│             FRONTEND (Next.js + Firebase Auth)              │
+│         🔐 Google Sign-In | Firebase Authentication         │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  BACKEND (FastAPI + Python)                  │
+│                                                              │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │              🧠 Google Gemini 2.5 Flash                 │ │
+│  │    Semantic Classification | Data Extraction | KPIs    │ │
+│  └────────────────────────────────────────────────────────┘ │
+│                                                              │
+│  ┌────────────────────────────────────────────────────────┐ │
+│  │              🔥 Firebase Admin SDK                      │ │
+│  │       Token Verification | Custom Claims | Roles       │ │
+│  └────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│              ☁️ Google Cloud Infrastructure                  │
+│    Cloud Storage | Cloud Run | Cloud Functions (Ready)     │
+└─────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## ✨ Features
+
+### Core Capabilities
+- 📄 **Multi-format Document Upload** - PDF, DOCX, images
+- 🧠 **Gemini AI Analysis** - Semantic understanding of documents
+- 📊 **KPI Calculation** - FSR, Infrastructure, Placements, etc.
+- ✅ **Compliance Checking** - Automated rule verification
+- 📈 **Trend Analysis** - Historical performance tracking
+- 📝 **PDF Report Generation** - Official accreditation reports
+- 💬 **AI Chatbot** - Gemini-powered assistant
+
+### Supported Modes
+- **AICTE Mode** - Technical education evaluation
+- **NBA Mode** - National Board of Accreditation
+
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
 - Python 3.11+
 - Node.js 18+
-- MongoDB (or use Docker)
-- OpenAI API key
+- Google Cloud Account (for Gemini API)
+- Firebase Project
 
-### Installation
-
-1. **Clone the repository**
+### Environment Setup
 
 ```bash
-git clone <repository-url>
-cd sih-2
-```
+# Clone repository
+git clone https://github.com/Nishant-aiml/Techsprint-Iveri.git
+cd Techsprint-Iveri
 
-2. **Backend Setup**
-
-```bash
+# Backend setup
 cd backend
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
-```
 
-3. **Frontend Setup**
-
-```bash
-cd frontend
+# Frontend setup
+cd ../frontend
 npm install
 ```
 
-4. **Environment Configuration**
+### Configure Google Services
 
-Copy `.env.example` to `.env` and fill in your values:
+Create `.env` file:
 
-```bash
-cp .env.example .env
+```env
+# Google Gemini AI
+GEMINI_API_KEY=your-gemini-api-key
+GEMINI_MODEL=gemini-2.5-flash
+
+# Firebase
+FIREBASE_PROJECT_ID=accreditation-platform
+FIREBASE_SERVICE_ACCOUNT_BASE64=base64-encoded-credentials
+
+# OpenAI (Fallback)
+OPENAI_API_KEY=your-openai-key
 ```
 
-Edit `.env`:
-- Set `MONGODB_URL`
-- Set `OPENAI_API_KEY`
-- Configure other settings as needed
-
-5. **Start MongoDB**
+### Run the Application
 
 ```bash
-# Using Docker
-docker run -d -p 27017:27017 mongo:7.0
-
-# Or use local MongoDB installation
-```
-
-6. **Run Backend**
-
-```bash
+# Terminal 1: Backend
 cd backend
-uvicorn main:app --reload
-```
+uvicorn main:app --reload --port 8000
 
-7. **Run Frontend**
-
-```bash
+# Terminal 2: Frontend
 cd frontend
 npm run dev
 ```
 
-### Docker Setup
+Access at: `http://localhost:3000`
 
-```bash
-# Build and start all services
-docker-compose up -d
+---
 
-# View logs
-docker-compose logs -f
+## 🏗️ Deployment
 
-# Stop services
-docker-compose down
-```
+### Live URLs
+- **Frontend**: https://smartapprovalai.vercel.app
+- **Backend**: https://smartapprovalai.up.railway.app
 
-## Usage
+### Production Stack
+| Service | Platform | Google Tech Used |
+|---------|----------|------------------|
+| Frontend | Vercel | Firebase Auth, Google Sign-In |
+| Backend | Railway | Gemini AI, Firebase Admin SDK |
+| Storage | Cloud Storage | Google Cloud Storage |
 
-1. **Select Mode**: Choose UGC or AICTE reviewer mode
-2. **Upload Documents**: Drag & drop institutional documents
-3. **Start Processing**: Begin AI analysis pipeline
-4. **View Dashboard**: See KPIs, sufficiency, compliance flags
-5. **Download Report**: Generate and download PDF report
-6. **Chat Assistant**: Ask questions about the analysis
+---
 
-## API Endpoints
+## 📖 Documentation
 
-### Batches
-- `POST /api/batches/` - Create batch
-- `GET /api/batches/` - List batches
-- `GET /api/batches/{batch_id}` - Get batch
-- `DELETE /api/batches/{batch_id}` - Delete batch
+- [Google Tech Stack Details](./GOOGLE_TECH_STACK.md)
+- [API Documentation](./backend/README.md)
+- [Frontend Guide](./frontend/README.md)
 
-### Documents
-- `POST /api/documents/upload` - Upload document
-- `GET /api/documents/batch/{batch_id}` - List documents
-- `GET /api/documents/{document_id}` - Get document
-- `DELETE /api/documents/{document_id}` - Delete document
+---
 
-### Processing
-- `POST /api/processing/start` - Start processing
-- `GET /api/processing/status/{batch_id}` - Get status
+## 👥 Team
 
-### Dashboard
-- `GET /api/dashboard/{batch_id}` - Get dashboard data
+Built for **Techsprint 2026** 🏆
 
-### Reports
-- `POST /api/reports/generate` - Generate report
-- `GET /api/reports/download/{batch_id}` - Download report
+---
 
-### Chatbot
-- `POST /api/chatbot/chat` - Chat with assistant
+## 📜 License
 
-### Search
-- `GET /api/search/{batch_id}` - Search batch
+MIT License - See [LICENSE](./LICENSE) for details
 
-### Audit
-- `POST /api/audit/` - Create audit log
-- `GET /api/audit/batch/{batch_id}` - Get audit logs
+---
 
-## KPI Formulas
-
-### UGC Mode
-- **Research Index**: Based on publications and citations
-- **Governance Score**: Committee count and compliance
-- **Student Outcome Index**: Placement and graduation rates
-
-### AICTE Mode
-- **FSR Score**: Faculty-Student Ratio
-- **Infrastructure Score**: Built-up area, labs, classrooms
-- **Placement Index**: Placement rate and average salary
-- **Lab Compliance Index**: Lab count and equipment
-
-## Sufficiency Formula
-
-```
-base_pct = (P/R) * 100
-penalty = D*2 + O*4 + L*5 + I*7
-penalty = min(penalty, 50)
-sufficiency = max(0, base_pct - penalty)
-```
-
-Where:
-- P = Present documents
-- R = Required documents
-- D = Duplicate count
-- O = Outdated count
-- L = Low quality count
-- I = Invalid count
-
-## Development
-
-### Backend Development
-
-```bash
-cd backend
-# Install dev dependencies
-pip install -r requirements.txt
-
-# Run with hot reload
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
-```
-
-### Frontend Development
-
-```bash
-cd frontend
-# Install dependencies
-npm install
-
-# Run dev server
-npm run dev
-```
-
-## Testing
-
-```bash
-# Backend tests (when implemented)
-cd backend
-pytest
-
-# Frontend tests (when implemented)
-cd frontend
-npm test
-```
-
-## Deployment
-
-### Production Considerations
-
-1. Set up proper MongoDB replica set
-2. Configure environment variables securely
-3. Use production-grade OpenAI API keys
-4. Set up proper file storage (S3, etc.)
-5. Configure CORS properly
-6. Set up monitoring and logging
-7. Use reverse proxy (Nginx)
-8. Enable HTTPS
-
-## License
-
-[Your License Here]
-
-## Support
-
-For issues and questions, please contact [Your Contact Info]
-
+<p align="center">
+  <strong>Built with ❤️ using Google Technologies</strong>
+  <br/>
+  <img src="https://img.shields.io/badge/Gemini-AI-4285F4?style=flat&logo=google&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Firebase-Backend-FFCA28?style=flat&logo=firebase&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Google_Cloud-Infra-4285F4?style=flat&logo=google-cloud&logoColor=white"/>
+</p>
