@@ -1,6 +1,18 @@
 """
-Firebase Authentication Service
-Handles user authentication with Firebase Auth (Email + Google Sign-In)
+Google Firebase Authentication Service
+========================================
+GOOGLE CLOUD AUTHENTICATION:
+- Firebase Authentication (Google's Enterprise Auth Service)
+- Google Sign-In OAuth 2.0 (Primary Auth Method)
+- Firebase Admin SDK (Server-side Token Verification)
+- Firebase Custom Claims (Role-Based Access Control)
+
+Supported Auth Methods:
+1. Google Sign-In (OAuth 2.0) - Primary
+2. Email/Password Authentication - Secondary
+3. Firebase Admin SDK Token Verification
+
+Powered by Google Cloud Identity Platform
 """
 
 import logging

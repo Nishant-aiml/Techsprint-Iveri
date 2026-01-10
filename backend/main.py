@@ -1,6 +1,16 @@
 """
 Smart Approval AI - FastAPI Backend
-Minimal, official architecture - SQLite temporary storage only
+=====================================
+POWERED BY GOOGLE TECHNOLOGIES:
+- Google Gemini 2.5 Flash AI (Primary AI Engine)
+- Firebase Authentication & Admin SDK
+- Google Cloud Platform Integration
+- Google AI Studio Optimized Prompts
+- Google Cloud Vision API (OCR - Optional)
+
+Architecture: Information Block Architecture with SQLite Temporary Storage
+AI Engine: Google Gemini 2.5 Flash via Google AI Studio API
+Auth: Firebase Authentication with Google Sign-In (OAuth 2.0)
 """
 
 # Load .env from project root FIRST (before any imports that use env vars)

@@ -1,6 +1,14 @@
 /**
- * Firebase Client Initialization
- * For Authentication (Email/Password + Google Sign-In)
+ * Google Firebase Client SDK Initialization
+ * ==========================================
+ * GOOGLE CLOUD IDENTITY PLATFORM:
+ * - Firebase Authentication (Google's Enterprise Auth)
+ * - Google Sign-In OAuth 2.0 (Primary Auth Method)
+ * - Firebase Cloud Messaging (Push Notifications - Ready)
+ * - Firebase Analytics (User Tracking - Ready)
+ * 
+ * This module initializes the Firebase SDK for client-side
+ * Google authentication services.
  */
 
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';

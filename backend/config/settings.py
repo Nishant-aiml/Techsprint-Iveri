@@ -1,5 +1,16 @@
 """
-Application configuration settings
+Application Configuration Settings
+====================================
+GOOGLE TECHNOLOGIES CONFIGURATION:
+- Google Gemini 2.5 Flash AI (Primary AI Engine via Google AI Studio API)
+- Google Firebase Authentication & Admin SDK
+- Google Cloud Platform Services (Cloud Storage, Cloud Vision)
+- Google Sign-In OAuth 2.0 Integration
+
+AI Model Priority:
+  1. Google Gemini 2.5 Flash (Primary - Best performance)
+  2. OpenAI GPT-5 Nano (Fallback)
+  3. OpenAI GPT-5 Mini (Last resort)
 """
 
 import os

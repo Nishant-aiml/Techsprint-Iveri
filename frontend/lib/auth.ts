@@ -1,6 +1,17 @@
 /**
- * Authentication Utilities
- * Handles Firebase Auth and backend token management
+ * Google Authentication Utilities
+ * =================================
+ * GOOGLE IDENTITY SERVICES:
+ * - Google Sign-In (OAuth 2.0) - Primary Authentication
+ * - Firebase Authentication SDK
+ * - Firebase Admin SDK Token Management
+ * - Google Cloud Identity Platform Integration
+ * 
+ * Features:
+ * - Google One-Tap Sign-In (Popup)
+ * - Email/Password Authentication (Fallback)
+ * - Secure JWT Token Management
+ * - Role-Based Access Control via Firebase Custom Claims
  */
 
 import {
