@@ -6,8 +6,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  signInWithRedirect,
-  getRedirectResult,
+  signInWithPopup,
   GoogleAuthProvider,
   signOut as firebaseSignOut,
   User,
@@ -114,45 +113,22 @@ export async function signUpWithEmail(email: string, password: string, name?: st
 }
 
 /**
- * Sign in with Google using redirect (avoids COOP policy issues in Next.js)
- * This initiates the redirect - the result is handled by handleGoogleRedirectResult
+ * Sign in with Google using popup (simpler than redirect, no Firebase Hosting needed)
+ * Returns the authenticated user directly
  */
-export async function signInWithGoogle(role?: 'department' | 'college'): Promise<void> {
-  // Store the intended role for after redirect
-  if (role) {
-    localStorage.setItem('pending_google_role', role);
-  }
-
-  // Initiate redirect-based sign in
-  await signInWithRedirect(auth, googleProvider);
-}
-
-/**
- * Handle Google redirect result (call this on app initialization)
- * Returns the authenticated user if redirect was successful
- */
-export async function handleGoogleRedirectResult(): Promise<AuthUser | null> {
+export async function signInWithGoogle(role?: 'department' | 'college'): Promise<AuthUser> {
   try {
-    const result = await getRedirectResult(auth);
-
-    if (!result) {
-      return null; // No redirect result pending
-    }
-
+    const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
     const additionalInfo = getAdditionalUserInfo(result);
 
-    // Check if we had a pending role to set
-    const pendingRole = localStorage.getItem('pending_google_role') as 'department' | 'college' | null;
-    localStorage.removeItem('pending_google_role');
-
     // If this is a new user and role is provided, set the role
-    if (additionalInfo?.isNewUser && pendingRole) {
+    if (additionalInfo?.isNewUser && role) {
       const idToken = await getIdToken(user);
       try {
         await api.post('/auth/set-role', {
           id_token: idToken,
-          role: pendingRole
+          role: role
         });
         // Get fresh token with custom claims
         const freshToken = await getIdToken(user, true);
@@ -171,16 +147,30 @@ export async function handleGoogleRedirectResult(): Promise<AuthUser | null> {
     const errorCode = error.code;
     const errorMessage = error.message;
 
-    if (errorCode === 'auth/account-exists-with-different-credential') {
+    if (errorCode === 'auth/popup-closed-by-user') {
+      throw new Error('Sign-in cancelled. Please try again.');
+    } else if (errorCode === 'auth/account-exists-with-different-credential') {
       throw new Error('An account already exists with the same email address but different sign-in credentials.');
     } else if (errorCode === 'auth/operation-not-allowed') {
       throw new Error('Google sign-in is not enabled. Please contact support.');
     } else if (errorCode === 'auth/unauthorized-domain') {
-      throw new Error('This domain is not authorized for OAuth operations.');
+      throw new Error('This domain is not authorized for OAuth operations. Please add it to Firebase Console.');
+    } else if (errorCode === 'auth/popup-blocked') {
+      throw new Error('Popup was blocked by browser. Please allow popups for this site.');
     }
 
+    console.error('Google sign-in error:', errorCode, errorMessage);
     throw new Error(errorMessage || 'Failed to sign in with Google. Please try again.');
   }
+}
+
+/**
+ * Handle Google redirect result (kept for compatibility, returns null with popup approach)
+ * @deprecated Use signInWithGoogle directly - it now returns the user
+ */
+export async function handleGoogleRedirectResult(): Promise<AuthUser | null> {
+  // With popup auth, this is no longer needed - kept for compatibility
+  return null;
 }
 
 /**

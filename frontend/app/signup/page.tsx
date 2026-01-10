@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { signUpWithEmail, signInWithGoogle, handleGoogleRedirectResult } from '@/lib/auth';
+import { signUpWithEmail, signInWithGoogle } from '@/lib/auth';
 import toast from 'react-hot-toast';
 import { Mail, Lock, UserPlus, User, ArrowRight, Building2, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -26,23 +26,7 @@ function SignUpPageContent() {
     return '/dashboard'; // Fallback
   };
 
-  // Handle Google redirect result on page load
-  useEffect(() => {
-    const handleRedirect = async () => {
-      try {
-        const user = await handleGoogleRedirectResult();
-        if (user) {
-          toast.success('Account created successfully!');
-          // Use hard redirect to ensure fresh auth state
-          window.location.href = getRoleDashboard(user.role);
-        }
-      } catch (error: any) {
-        console.error('Google redirect error:', error);
-        toast.error(error.message || 'Google sign up failed');
-      }
-    };
-    handleRedirect();
-  }, []);
+  // No need for redirect handling with popup auth
 
   const handleEmailSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,9 +60,12 @@ function SignUpPageContent() {
     setLoading(true);
 
     try {
-      // This triggers a redirect - page will reload after Google auth
-      await signInWithGoogle(role);
-      // Note: We won't reach this point as the page redirects
+      // Popup-based sign in - returns user directly
+      const user = await signInWithGoogle(role);
+      toast.success('Account created successfully!');
+
+      // Redirect to role-specific dashboard
+      window.location.href = getRoleDashboard(user.role);
     } catch (error: any) {
       toast.error(error.message || 'Google sign up failed');
       setLoading(false);

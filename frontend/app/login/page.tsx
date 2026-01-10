@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { signInWithEmail, signInWithGoogle, handleGoogleRedirectResult, getUserProfile } from '@/lib/auth';
+import { signInWithEmail, signInWithGoogle, getUserProfile } from '@/lib/auth';
 import toast from 'react-hot-toast';
 import { Mail, Lock, LogIn } from 'lucide-react';
 import Link from 'next/link';
@@ -16,31 +16,7 @@ function LoginPageContent() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
 
-  // Handle Google redirect result on page load
-  useEffect(() => {
-    const handleRedirect = async () => {
-      try {
-        const user = await handleGoogleRedirectResult();
-        if (user) {
-          toast.success('Login successful!');
-          // Redirect based on role (use hard redirect to refresh auth state)
-          if (!user.role || user.role === 'pending') {
-            window.location.href = `/select-role?redirect=${encodeURIComponent(redirect)}`;
-          } else if (user.role === 'college') {
-            window.location.href = '/';
-          } else if (user.role === 'department') {
-            window.location.href = '/nba-dashboard';
-          } else {
-            window.location.href = redirect;
-          }
-        }
-      } catch (error: any) {
-        console.error('Google redirect error:', error);
-        toast.error(error.message || 'Google login failed');
-      }
-    };
-    handleRedirect();
-  }, [redirect]);
+  // No need for redirect handling with popup auth
 
   // Check role and redirect accordingly
   const handleSuccessfulLogin = async () => {
@@ -84,9 +60,20 @@ function LoginPageContent() {
     setLoading(true);
 
     try {
-      // This triggers a redirect - page will reload after Google auth
-      await signInWithGoogle();
-      // Note: We won't reach this point as the page redirects
+      // Popup-based sign in - returns user directly
+      const user = await signInWithGoogle();
+      toast.success('Login successful!');
+
+      // Redirect based on user role
+      if (!user.role || user.role === 'pending') {
+        window.location.href = `/select-role?redirect=${encodeURIComponent(redirect)}`;
+      } else if (user.role === 'college') {
+        window.location.href = '/';
+      } else if (user.role === 'department') {
+        window.location.href = '/nba-dashboard';
+      } else {
+        window.location.href = redirect;
+      }
     } catch (error: any) {
       toast.error(error.message || 'Google login failed');
       setLoading(false);
