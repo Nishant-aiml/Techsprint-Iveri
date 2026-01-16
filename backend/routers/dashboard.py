@@ -710,26 +710,35 @@ def get_dashboard_data(
         kpis_map = {}
         if kpi_results and isinstance(kpi_results, dict):
             for kpi_id, kpi_data in kpi_results.items():
+                # Handle both formats: nested dict {value: X} and direct numeric X
                 if isinstance(kpi_data, dict) and "value" in kpi_data:
                     value = kpi_data.get("value", 0)
                     name = kpi_data.get("name", kpi_id.replace("_", " ").title())
-                    # Handle None values - display as "Insufficient Data"
-                    if value is None:
-                        kpi_cards.append(KPICard(
-                            name=name,
-                            value=None,
-                            label="Insufficient Data",
-                            color="gray"
-                        ))
-                    else:
-                        kpi_cards.append(KPICard(
-                            name=name,
-                            value=float(value),
-                            label=name,
-                            color="blue" if value >= 70 else "orange" if value >= 50 else "red"
-                        ))
-                    # also populate simplified map
-                    kpis_map[kpi_id] = value if value is None else float(value)
+                elif isinstance(kpi_data, (int, float)):
+                    # Direct numeric value (from system batches)
+                    value = kpi_data
+                    name = kpi_id.replace("_", " ").title()
+                else:
+                    # Skip invalid formats
+                    continue
+                
+                # Handle None values - display as "Insufficient Data"
+                if value is None:
+                    kpi_cards.append(KPICard(
+                        name=name,
+                        value=None,
+                        label="Insufficient Data",
+                        color="gray"
+                    ))
+                else:
+                    kpi_cards.append(KPICard(
+                        name=name,
+                        value=float(value),
+                        label=name,
+                        color="blue" if value >= 70 else "orange" if value >= 50 else "red"
+                    ))
+                # also populate simplified map
+                kpis_map[kpi_id] = value if value is None else float(value)
     
         # Get sufficiency
         sufficiency_result = batch.sufficiency_result or {}
