@@ -91,11 +91,14 @@ function ComparePageContent() {
         const fetchBatches = async () => {
             try {
                 const batches = await batchApi.list();
+                console.log('[Compare] Fetched batches:', batches.length, batches);
                 // Only show valid batches (completed with documents)
+                // System batches with blocks are also valid
                 const validBatches = batches.filter(isValidBatch);
+                console.log('[Compare] Valid batches:', validBatches.length, validBatches.map(b => b.institution_name || b.batch_id));
                 setAllBatches(validBatches);
             } catch (err) {
-                console.error(err);
+                console.error('[Compare] Error fetching batches:', err);
                 toast.error('Failed to fetch institutions');
             } finally {
                 setLoadingBatches(false);
