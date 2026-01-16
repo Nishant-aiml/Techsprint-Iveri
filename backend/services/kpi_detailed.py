@@ -674,11 +674,23 @@ def _compute_overall_detailed(batch_id: str, data: Dict, mode: str, evidence_map
         batch = db.query(Batch).filter(Batch.id == batch_id).first()
         kpi_results = batch.kpi_results or {}
         
-        # Extract individual KPI scores
-        fsr = kpi_results.get("fsr_score", {}).get("value") if isinstance(kpi_results.get("fsr_score"), dict) else None
-        infra = kpi_results.get("infrastructure_score", {}).get("value") if isinstance(kpi_results.get("infrastructure_score"), dict) else None
-        placement = kpi_results.get("placement_index", {}).get("value") if isinstance(kpi_results.get("placement_index"), dict) else None
-        lab = kpi_results.get("lab_compliance_index", {}).get("value") if isinstance(kpi_results.get("lab_compliance_index"), dict) else None
+        # Helper function to extract value from either dict or direct numeric
+        def extract_kpi_value(key):
+            val = kpi_results.get(key)
+            if val is None:
+                return None
+            if isinstance(val, dict):
+                return val.get("value")
+            # Direct numeric value (from system batches)
+            if isinstance(val, (int, float)):
+                return val
+            return None
+        
+        # Extract individual KPI scores (handles both formats)
+        fsr = extract_kpi_value("fsr_score")
+        infra = extract_kpi_value("infrastructure_score")
+        placement = extract_kpi_value("placement_index")
+        lab = extract_kpi_value("lab_compliance_index")
         
         # AICTE Overall calculation (same logic as kpi.py)
         if mode.lower() == "aicte":
