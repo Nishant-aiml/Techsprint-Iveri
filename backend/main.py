@@ -39,6 +39,14 @@ from middleware.auth_middleware import verify_token_middleware
 # Initialize SQLite database
 init_db()
 
+# Auto-seed system batches on startup (for Railway deployment)
+# This ensures demo data is available after each deploy
+try:
+    from scripts.seed_system_batches import seed_system_batches
+    seed_system_batches()
+except Exception as e:
+    print(f"Note: Could not seed system batches: {e}")
+
 # CORS configuration (force permissive for local dev to avoid blocked requests)
 _default_origins = "http://localhost:3000,http://127.0.0.1:3000"
 ALLOWED_ORIGINS = ["*"]
